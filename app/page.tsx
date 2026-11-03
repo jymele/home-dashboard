@@ -1,5 +1,5 @@
-import WeeklyWeather from "@/components/custom/weekly-weather";
-import MainDayWeather from "@/components/custom/main-day-weather";
+import WeeklyWeather from "@/components/custom/WeeklyWeather";
+import MainDayWeather from "@/components/custom/MainDayWeather";
 import { Suspense } from "react";
 
 export default async function Home() {
