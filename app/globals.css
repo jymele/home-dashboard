@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+input {
+    @apply border border-gray-600 px-1.5 py-0.5 rounded-md
+}

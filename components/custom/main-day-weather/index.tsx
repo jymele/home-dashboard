@@ -1,19 +1,22 @@
 import { connection } from 'next/server'
-import { Location } from '@/app/types'
-import { settings } from "@/app/config"
+import { getSettings } from '@/lib/settings';
 
 export default async function MainDayWeather() {
-
-    const response = await fetch(`${process.env.OPENWEATHER_API_URL}/geo/1.0/direct?q=${settings.city_name},${settings.state_code},${settings.country_code}&appid=${process.env.OPENWEATHER_API_KEY}`)
-    const locations: Location[] = await response.json()
-    const location: Location = locations[0]
-
+    const settings = await getSettings();
 
     await connection()
     const date = new Date()
 
+    if (!settings.lat || !settings.lon) {
+        return <div className="text-lg font-bold p-4">
+            <h1>{date.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</h1>
+            <h2 className="py-2">Please set your location in the settings page.</h2>
+        </div>
+    }
+
     return <div className="text-lg font-bold p-4">
-        <h1>{date.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</h1>
-        <h2 className="py-2">{location.lat}, {location.lon}, {location.country}</h2>
+        <h1>{ settings.dashboardTitle }</h1>
+        <h2>{date.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</h2>
+        <h2 className="py-2">{settings.lat}, {settings.lon}, {settings.country_code}</h2>
     </div>
 }
