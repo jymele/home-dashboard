@@ -11,7 +11,7 @@ export default async function SettingsForm() {
                     <input name="dashboardTitle" defaultValue={settings.dashboardTitle} />
                 </div>
     
-                <div className="flex gap-4 items-center">
+                {/* <div className="flex gap-4 items-center">
                     <label>Weather API Key:</label>
                     <input name="weatherApiKey" defaultValue={settings.weatherApiKey} type="password" />
                 </div>
@@ -19,7 +19,7 @@ export default async function SettingsForm() {
                 <label>
                     Refresh Interval (seconds):
                     <input name="refreshInterval" defaultValue={settings.refreshInterval} type="number" />
-                </label>
+                </label> */}
     
                 <label>
                     Units:
