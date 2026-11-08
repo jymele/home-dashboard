@@ -66,3 +66,12 @@ export interface WeatherResponse {
   name: string;
   cod: number;
 }
+
+export interface DailyForecast {
+  date: Date;
+  tempMin: number;
+  tempMax: number;
+  tempDay?: number;
+  description: string;
+  icon: string;
+}

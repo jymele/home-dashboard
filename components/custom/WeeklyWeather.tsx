@@ -1,25 +1,49 @@
-import DayWeather from "./DayWeather"
-import { connection } from 'next/server'
+import DayWeather from './DayWeather';
+import { connection } from 'next/server';
 import { getSettings } from '@/lib/settings';
-// import { setTimeout } from 'node:timers/promises';
+import { getWeeklyForecast } from '@/lib/weather';
 
 export default async function WeeklyWeather() {
     const settings = await getSettings();
-    await connection()
-    const date = new Date()
+    await connection();
 
-    // await setTimeout(1000) // Wait for 1 second to avoid rate limiting
-    // const weatherForecastResponse = await fetch(`${process.env.OPENWEATHER_API_URL}/data/2.5/forecast/daily?lat=${settings.lat}&lon=${settings.lon}&cnt=7&appid=${process.env.OPENWEATHER_API_KEY}&units=${settings.units}`)
-    // const weatherForecast = await weatherForecastResponse.json()
-    // console.log(weatherForecast)
-    console.log((`${process.env.OPENWEATHER_API_URL}/data/2.5/forecast/daily?lat=${settings.lat}&lon=${settings.lon}&cnt=7&appid=${process.env.OPENWEATHER_API_KEY}&units=${settings.units}`))
+    if (!settings.lat || !settings.lon) {
+        return (
+            <div className="p-4">
+                <h2 className="py-2 text-xl font-bold">Weekly Forecast</h2>
+                <div className="p-4 ring ring-amber-200 rounded-sm text-zinc-600">
+                    Please configure your location in the settings page to see the 7-day weather forecast.
+                </div>
+            </div>
+        );
+    }
 
-    const days = [ 1, 2, 3, 4, 5, 6, 7]
+    const weeklyForecast = await getWeeklyForecast(settings);
+    const unitSymbol = settings.units === 'imperial' ? '°F' : '°C';
 
-    return <div className="p-4">
-        <h2 className="py-2">Weekly Forecast</h2>
-        <div className="grid grid-cols-7 gap-2">
-        {days.map((day, index) => <DayWeather key={index} date={new Date(date.setDate(date.getDate() + 1))} />)}
-    </div>
-    </div>
+    return (
+        <div className="p-4">
+            <h2 className="py-2 text-xl font-bold">Weekly Forecast</h2>
+            {weeklyForecast.length === 0 ? (
+                <div className="p-4 ring ring-amber-200 rounded-sm text-zinc-600">
+                    Unable to load the weekly forecast at this moment. Please check your network or weather settings.
+                </div>
+            ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
+                    {weeklyForecast.map((forecast, index) => (
+                        <DayWeather
+                            key={index}
+                            date={forecast.date}
+                            tempMin={forecast.tempMin}
+                            tempMax={forecast.tempMax}
+                            tempDay={forecast.tempDay}
+                            description={forecast.description}
+                            icon={forecast.icon}
+                            unit={unitSymbol}
+                        />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
 }
