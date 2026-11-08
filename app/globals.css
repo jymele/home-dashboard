@@ -1,5 +1,38 @@
 @import "tailwindcss";
 
-input {
-    @apply border border-gray-600 px-1.5 py-0.5 rounded-md
+@theme {
+  --color-primary-50: oklch(97% 0.012 172.552);
+  --color-primary-100: oklch(92% 0.022 172.552);
+  --color-primary-200: oklch(82% 0.032 172.552);
+  --color-primary-300: oklch(68% 0.042 172.552);
+  --color-primary-400: oklch(50% 0.048 172.552);
+  --color-primary-500: oklch(38% 0.051 172.552);
+  --color-primary: oklch(26.2% 0.051 172.552);
+  --color-primary-600: oklch(26.2% 0.051 172.552);
+  --color-primary-700: oklch(21% 0.045 172.552);
+  --color-primary-800: oklch(16% 0.038 172.552);
+  --color-primary-900: oklch(12% 0.028 172.552);
+
+  --color-accent-50: oklch(97% 0.02 16.935);
+  --color-accent-100: oklch(92% 0.05 16.935);
+  --color-accent-200: oklch(82% 0.09 16.935);
+  --color-accent-300: oklch(70% 0.15 16.935);
+  --color-accent-400: oklch(60% 0.20 16.935);
+  --color-accent: oklch(51.4% 0.222 16.935);
+  --color-accent-500: oklch(51.4% 0.222 16.935);
+  --color-accent-600: oklch(44% 0.21 16.935);
+  --color-accent-700: oklch(36% 0.18 16.935);
+  --color-accent-800: oklch(28% 0.14 16.935);
+  --color-accent-900: oklch(20% 0.10 16.935);
+}
+
+:root {
+  --primary: oklch(26.2% 0.051 172.552);
+  --accent: oklch(51.4% 0.222 16.935);
+}
+
+body {
+  background-color: #f3f5f8;
+  color: #1a202c;
+  font-family: var(--font-inter-tight), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
